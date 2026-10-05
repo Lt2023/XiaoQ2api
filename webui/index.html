@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>XiaoQ2api · 控制台</title>
+    <link rel="icon" href="/logo.png" type="image/png" />
+    <link rel="stylesheet" href="/assets/styles.css" />
+    <script src="/assets/app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="主导航">
+        <a class="brand" href="#dashboard"
+          ><img src="/logo.png" alt="XiaoQ" width="38" height="38" /><span
+            >XiaoQ<span class="brand-caption">API CONSOLE</span></span
+          ></a
+        >
+        <div class="workspace">
+          <span id="workspace-avatar" class="workspace-symbol qq-avatar-frame">Q</span>
+          <div>
+            <strong>工作空间</strong><span>本地 API 服务</span>
+          </div>
+          <span class="workspace-dot"></span>
+        </div>
+        <p class="nav-caption">工作空间</p>
+        <nav>
+          <a href="#dashboard" data-page="dashboard" class="nav-item active"
+            ><span class="icon icon-dashboard"></span>控制台<span
+              class="nav-shortcut"
+              >01</span
+            ></a
+          >
+          <a href="#playground" data-page="playground" class="nav-item" aria-label="游乐场"
+            ><span class="icon icon-playground"></span>游乐场</a
+          >
+          <a href="#accounts" data-page="accounts" class="nav-item"
+            ><span class="icon icon-users"></span>账号管理</a
+          >
+          <a href="#keys" data-page="keys" class="nav-item"
+            ><span class="icon icon-key"></span>API Key 管理</a
+          >
+          <a href="#logs" data-page="logs" class="nav-item"
+            ><span class="icon icon-terminal"></span>日志管理</a
+          >
+          <a href="#settings" data-page="settings" class="nav-item"
+            ><span class="icon icon-settings"></span>系统设置</a
+          >
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="engine-note">
+            <span class="icon icon-terminal"></span
+            ><strong>让XiaoQ，多一点可能。</strong>
+            <p>简单连接，自由调用</p>
+            <a href="https://www.mingcute.com" target="_blank" rel="noreferrer"
+              >MingCute Icons <span class="icon icon-external-link" aria-hidden="true"></span></a
+            >
+          </div>
+          <div class="sidebar-foot">
+            <span class="tiny-dot"></span> XiaoQ Gateway <span>v1.0</span>
+          </div>
+        </div>
+      </aside>
+      <div class="main-shell">
+        <header class="topbar">
+          <div class="breadcrumb">
+            工作空间 <span>/</span> <strong id="breadcrumb">控制台</strong>
+          </div>
+          <div class="topbar-right">
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换深色模式" title="切换深色模式"><span class="icon icon-moon" aria-hidden="true"></span></button>
+            <span id="connection-status" class="connection muted"
+              ><span class="tiny-dot"></span>等待连接</span
+            ><span class="header-divider"></span
+            ><button
+              id="session-button"
+              class="profile-button"
+              title="登录控制台"
+            >
+              <span id="profile-avatar" class="avatar qq-avatar-frame">Q</span
+              ><span id="session-label">管理员登录</span>
+            </button>
+          </div>
+        </header>
+        <main id="main-content" tabindex="-1">
+          <section class="page-heading">
+            <div>
+              <div class="eyebrow" id="page-eyebrow">OVERVIEW</div>
+              <h1 id="page-title">控制台</h1>
+              <p id="page-description">每一次请求，都井然有序。</p>
+            </div>
+            <div id="page-actions" class="heading-actions"></div>
+          </section>
+          <div id="page-content" aria-live="polite"></div>
+          <footer class="page-footer">
+            <span
+              >XiaoQ API Console
+              <span class="footer-dot">·</span> 简单连接，自由调用</span
+            ><span id="last-updated">尚未同步</span>
+          </footer>
+        </main>
+      </div>
+    </div>
+    <dialog
+      id="login-dialog"
+      class="modal login-modal"
+      aria-labelledby="login-title"
+    >
+      <div class="login-brand">
+        <img src="/logo.png" alt="XiaoQ" width="54" height="54" /><span
+          class="pill blue"
+          >管理控制台</span
+        >
+      </div>
+      <h2 id="login-title">欢迎回来。</h2>
+      <p class="dialog-intro">连接你的XiaoQ 工作空间，管理每一次调用。</p>
+      <form id="login-form">
+        <label for="admin-key">管理员密钥</label>
+        <div class="password-field">
+          <input
+            id="admin-key"
+            name="admin-key"
+            type="password"
+            placeholder="输入 config.env 中的 api_key"
+            autocomplete="current-password"
+            required
+          /><button
+            type="button"
+            id="toggle-password"
+            class="icon-button"
+            aria-label="显示或隐藏密钥"
+          >
+            <span class="icon icon-eye"></span>
+          </button>
+        </div>
+        <p class="field-help">
+          登录状态会保存在此浏览器。刷新或重启后仍可使用。点击“退出登录”可清除记忆。
+        </p>
+        <p id="login-error" class="form-error" role="alert"></p>
+        <button type="submit" class="button primary full-width">
+          进入控制台 <span class="icon icon-arrow"></span>
+        </button>
+      </form>
+      <p class="login-foot">XiaoQ API Console</p>
+    </dialog>
+    <dialog id="editor-dialog" class="modal" aria-labelledby="editor-title">
+      <div class="modal-header">
+        <h2 id="editor-title"></h2>
+        <button class="icon-button" data-close aria-label="关闭">
+          <span class="icon icon-close"></span>
+        </button>
+      </div>
+      <div id="editor-body"></div>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+  </body>
+</html>

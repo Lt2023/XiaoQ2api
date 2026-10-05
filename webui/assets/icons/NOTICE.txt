@@ -1,0 +1,5 @@
+Icons from MingCute by Richard9394 / MingCute Design.
+Website: https://www.mingcute.com
+Source: https://github.com/Richard9394/MingCute/tree/main/assets/svg/core/regular
+License: Apache-2.0; see LICENSE in this directory.
+Original SVG artwork is unchanged. CSS masks provide theme coloring.
